@@ -3,23 +3,51 @@
 
 using namespace std; // if you don't want to type std::
 
+struct Engine
+{
+  bool type;
+  bool fuel_type;
+};
+
+struct Car
+{
+  std::string make;
+  std::string model;
+  unsigned short year;
+  double fuel_tank_size;
+  Engine engine;
+};
+
 int main()
 {
   // Datatypes
   // Primitive Datatypes (Basic ones)
-  float f = 0.1;
-  int x = 1; // integer (whole number)
-  double y = 2.2; // 64-bit floating-point (real number)
-  float yy = 3.1; // 32-bit floating-point (real number)
-  char z = 'a'; // character, don't forget a single quote ''
-  std::string s = "abc"; // multiple characters ""
-  bool a = 0; // either 0 or 1
-  unsigned int xx = 10; // non-negative integer
-  unsigned char zz = '2';
-  int8_t ii = 12; // 8-bit integer
-  auto some_name = 13.0;
-  auto dd = 'e';
+
+{
+  int x = 10; 
+  // 10 is store in a memory block as 00000110
+  // Q: Where exactly is this 000001110 ?
+  // A: It is stored at the address of x.
+  // Q: What exactly is the address of x?
+  // A: You ask a computer for it.
+  // Q: How do we ask for it?
+  // A: By putting a symbol & in front of the variable.
+  std::cout << "This is the value of x: " << x << std::endl;
+  std::cout << "This is the address of x: " << &x << std::endl;
+}
 
   // Fancy Ones
+  int y[3] = {1,2,3}; //array (a set of a primitive data type)
+
+  // You can also create your own datatype from a collectionn
+  // of primitive datatypes
+  Car TK_car;
+  TK_car.make = "Toyota";
+  TK_car.model = "corolla";
+  TK_car.year = 2017;
+  TK_car.engine.fuel_type = 0; // 0 diesel; 1 others
+
+  Car someone_car;
+  someone_car.make = "Honda";
 }
 // I don't llke to code
