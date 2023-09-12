@@ -9,6 +9,8 @@ struct Engine
   bool fuel_type;
 };
 
+// your custom datatype (structure or class) 
+// has to be outside of the function
 struct Car
 {
   std::string make;
@@ -16,29 +18,11 @@ struct Car
   unsigned short year;
   double fuel_tank_size;
   Engine engine;
-};
+}; // do not forget a semi-colon
 
 int main()
 {
   // Datatypes
-  // Primitive Datatypes (Basic ones)
-
-{
-  int x = 10; 
-  // 10 is store in a memory block as 00000110
-  // Q: Where exactly is this 000001110 ?
-  // A: It is stored at the address of x.
-  // Q: What exactly is the address of x?
-  // A: You ask a computer for it.
-  // Q: How do we ask for it?
-  // A: By putting a symbol & in front of the variable.
-  std::cout << "This is the value of x: " << x << std::endl;
-  std::cout << "This is the address of x: " << &x << std::endl;
-}
-
-  // Fancy Ones
-  int y[3] = {1,2,3}; //array (a set of a primitive data type)
-
   // You can also create your own datatype from a collectionn
   // of primitive datatypes
   Car TK_car;
