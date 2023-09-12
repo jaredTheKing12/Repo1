@@ -69,6 +69,12 @@ void add_two(int* n, int* m) // we make n and m to be a pointer variable
   std::cout << "dereferenced value m after add two: " << *m << std::endl;
 }
 
+void add_three(double& n, double& m) // n and m are references
+{
+  n = n + 3;
+  m = m + 3;
+}
+
 int main()
 {
   // functions
@@ -79,7 +85,21 @@ int main()
   std::cout << "a: " << a << std::endl;
   std::cout << "b: " << b << std::endl;
 
+  // Beside a pointer, there is another way to 
+  // reference (memory address) a variable
+  // which is called "reference"
+  double c = 1.1;
+  // d is a reference of c
+  double &d = c; // has to match the original datatype
+  // you keep using d instead of c
+  // and the value of c will be updated if the value of d is updated
+  d = 99;
+  std::cout << "c: " << c << std::endl;
 
+  double e = 7.7, f = 8.8;
+  add_three(e,f);
+  std::cout << "e: " << e << std::endl;
+  std::cout << "f: " << f << std::endl;
 
 /*
   // Datatypes
