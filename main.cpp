@@ -1,150 +1,66 @@
 #include <iostream>
 #include <string>
 
-using namespace std; // if you don't want to type std::
-
-struct Engine
-{
-  bool type;
-  bool fuel_type;
-};
-
-// your custom datatype (structure or class) 
-// has to be outside of the function
-struct Car
-{
-  std::string make;
-  std::string model;
-  unsigned short year;
-  double fuel_tank_size;
-  Engine engine;
-}; // do not forget a semi-colon
-
-// a function named "add_one" that takes an integer as an input
-// give another integer as the output.
-// In general, a function can only return a single variable as
-// an output
-// int add_one(int n)
-// {
-//   return n+1;
-// }
-
-// what if we want to update more than one variables
-// void function implies that there is no output from a function.
-void add_one(int n)
-{
-  // {} determines the scope of the code.
-  // the value of n is copied from the value of a at line
-  // add_one(a);
-  // n and a have the same value, but they have a different address
-  // This means n and a are not really the same variable.
-  n = n + 1; // 1 is added to n, not a
-} // this is the end of a scope of n, which means n is gone at this line
-// This is fine if you don't need n and a to be the same variable
-
-// What if, you want to update the value of more than one variables
-// within a function
-void add_two(int* n, int* m) // we make n and m to be a pointer variable
-{
-  // // the pointer variable has an address of the other variable
-  // // as its own value
-  // std::cout << "n before add two: " << n << std::endl;
-  // std::cout << "m before add two: " << m << std::endl;
-  // // Theses lines below shifted the memory address where
-  // // n and m are pointing to.
-  // // As a result, n and m are not pointing to the memory address of
-  // // a and b anymore.
-  // n = n + 2; // this line means "address of n = address of n + 2"
-  // m = m + 2; // this line means "address of m = address of m + 2"
-  // std::cout << "n after add two: " << n << std::endl;
-  // std::cout << "m after add two: " << m << std::endl;
-
-  // To actually update the values of a and b, we need to
-  // deference n and m
-  std::cout << "dereferenced value n before add two: " << *n << std::endl;
-  std::cout << "dereferenced value m before add two: " << *m << std::endl;
-  *n = *n + 2; // this line means "dereferenced value of n = dereferenced value of n + 2"
-  *m = *m + 2;
-  std::cout << "dereferenced value n after add two: " << *n << std::endl;
-  std::cout << "dereferenced value m after add two: " << *m << std::endl;
-}
-
-void add_three(double& n, double& m) // n and m are references
-{
-  n = n + 3;
-  m = m + 3;
-}
+// any variables declared outside of the scope
+// are called a global variables.
+// It exists as long as the program runs.
+int x = 10; 
 
 int main()
 {
-  // functions
-  int a = 10, b = 20;;
-  // add_two(a, b); // this has an error because a and b are a regular variable
-  // but a pointer needs an address
-  add_two(&a, &b); // give an address of a and b to pointers n and m
-  std::cout << "a: " << a << std::endl;
-  std::cout << "b: " << b << std::endl;
+  // the computer will automatically allocate a part of
+  // mmeory for this int abc
+  int abc = 1;
 
-  // Beside a pointer, there is another way to 
-  // reference (memory address) a variable
-  // which is called "reference"
-  double c = 1.1;
-  // d is a reference of c
-  double &d = c; // has to match the original datatype
-  // you keep using d instead of c
-  // and the value of c will be updated if the value of d is updated
-  d = 99;
-  std::cout << "c: " << c << std::endl;
+  // what if, I want empty 4 bytes of memory
+  // I can ask for it using a pointer.
+  int* def = new int; // int is 4 bytes
+  // I have empty memory address of 4 bytes that this def
+  // pointer is pointing at.
 
-  double e = 7.7, f = 8.8;
-  add_three(e,f);
-  std::cout << "e: " << e << std::endl;
-  std::cout << "f: " << f << std::endl;
+  // What if I want more than 4 bytes
+  int* g = new int[5]; // 5*sizeof(int) == 5*4 = 20
+  // g is still a local variables but it is pointing to
+  // a memory address that gives me 20 bytes of memory
+  std::cout << &g[0] << "," << &g[1] << std::endl;
 
-/*
-  // Datatypes
-  int x = 1;
-  x = 2;
-  // a variable x has a value of 1 and it is stored somewhere
-  // inside the memory, which has a specific memory address
-  std::cout << "This is a value of x: " << x << std::endl;
-  std::cout << "This is the address of x: " << &x << std::endl;
+  // int* hh;
+  {
+    int* h = new int[3]; // 12 bytes of memory
+    // h is a stack/local variables
+    // The scope of h is from line 28 to 34
+    h[0] = 1357;
+    // hh = &h[0];
+  } // h will be destoryed here
+  // what happen with the memory that h gave to me?
+  // std::cout << "*hh: " << *hh << std::endl;
+  // If I don't have hh, I will lose track of the memory
+  // I got from h because h was destroy
+  // However, the memory blocks that h gave me still there
+  // inside the memory. I just do not have a way to access
+  // those memory anymore.
+  // This is called "memory leak"
 
-  // another fancy datatype
-  int* x_ptr; // int* is a pointer. It is the same int *x_ptr;
-  // we know that x is stored somewhere (&x) in the memory.
-  // the pointer variable (x_ptr) is also stored somewhere in the memory.
-  // The value of a pointer variable is an address 
-  // of the other variable.
-  x_ptr = &x; // set x_ptr to point to the address of x (reference)
-  std::cout << "This is the value of x_ptr: " << x_ptr << std::endl;
-  std::cout << "This is the address of x_ptr: " << &x_ptr << std::endl;
 
-  // You can get back to value of the variable that a pointer
-  // is point at by putting a * in front of a pointer variable
-  // we can get the value of x from x_ptr
-  // this is called "dereference" of a pointer
-  std::cout << "Value of x obtained from x_ptr: " << *x_ptr << std::endl; 
- */
- { 
-  // You can also create your own datatype from a collectionn
-  // of primitive datatypes
 
-  // Car (structure or class)
-  // Any variables created from a structure/class is called an object.
-  // The process of creating an object from a structure/class
-  // is called an instantiation.
-  Car TK_car; // Car is a stucture/class, and TK_Car is an object
 
-  // Variables inside your structure/class are called 
-  // "variable members"
-  TK_car.make = "Toyota";
-  TK_car.model = "corolla";
-  TK_car.year = 2017;
-  TK_car.engine.fuel_type = 0; // 0 diesel; 1 others
+  // std::cout << x << std::endl;
 
-  Car someone_car; // somecar_car is also an object instantiated from a structure/class Car
-  someone_car.make = "Honda";
- }
-}
-// I don't llke to code
+  {
+    int x = 2;
+    // std::cout << x << std::endl; // this line will use a local x instead
+  }
+
+  for(int i = 0; i < 10; i++)
+  {
+    // The static keyword put y at a different part of 
+    // memory than not using a static keyword
+    // int y = 100; // y is stored at stack memory
+    // static int y = 100; // y is stored at static memory
+
+    static int y = 100;
+    y = y + 1;
+    std::cout << y << ", " << &y << std::endl;
+  } // y is not destroyed here because of static keyword
+
+} // a,b,c,x,y,z will be removed from the memory at this line
