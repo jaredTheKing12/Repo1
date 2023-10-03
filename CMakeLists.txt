@@ -9,4 +9,6 @@ add_executable(${CMAKE_PROJECT_NAME}
                     math_tools.h
                     dynamics.h
                     dynamics.cpp
+                    vehicle.h
+                    vehicle.cpp
                 )
