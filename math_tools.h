@@ -42,6 +42,9 @@ public:
     void set_num_rows(int n);
     void add_elements();
     void transpose();
+    double get_element(int i, int j);
+    int get_rows();
+    int get_column();
 
     // Operator Overloading Functions
     // I will overload a + operator
@@ -50,6 +53,7 @@ public:
     void operator*(double a);
     void operator*(Matrix A);
     double operator-(int a);
+    std::vector<double> operator*(std::vector<double> a);
 
     void print();
 };

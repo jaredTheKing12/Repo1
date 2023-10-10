@@ -71,7 +71,7 @@ Matrix::Matrix(std::vector<std::vector<double>> v)
 
 Matrix::~Matrix()
 {
-    std::cout << "Matrix Destroyed" << std::endl;
+    // std::cout << "Matrix Destroyed" << std::endl;
 }
 
 void Matrix::add_two(int x)
@@ -116,6 +116,33 @@ double Matrix::operator-(int a)
     return -1;
 }
 
+std::vector<double> Matrix::operator*(std::vector<double> a)
+{
+    std::vector<double> v;
+    for(int i = 0; i < this->data.size(); i++)
+    {
+        for(int j = 0; j < this->data[i].size(); j++)
+        {
+            v.push_back(this->data[i][j] * a[j]);
+        }
+    }
+    return v;
+}
+
+double Matrix::get_element(int i, int j)
+{
+    return this->data[i][j];
+}
+
+int Matrix::get_rows()
+{
+    return this->data.size();
+}
+
+int Matrix::get_column()
+{
+    return this->data[0].size();
+}
 
 void Matrix::print()
 {
