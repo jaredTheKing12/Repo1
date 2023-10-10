@@ -13,6 +13,8 @@ void integrate_4(double &x, double (*dyn)(double), double dt);
 class Matrix
 {
     int num_rows, num_cols; // these are not initialized
+    // what if I want my vector of vectors to contain something
+    // else beside double or a specific primitive datatype.
     std::vector<std::vector<double>> data; // not initialzed
 public:
     // There are several ways to initialize variable members
@@ -27,6 +29,12 @@ public:
     // It will be called autonmatically when an object
     // is instantiate from a class
 
+    Matrix(int x);
+    Matrix(std::vector<std::vector<double>> v);
+
+    void add_two(int x);
+    void add_two(double x, float y);
+
     ~Matrix(); // this is deconstructor/destoryer
     // This is also a special function that will be called when
     // the object goes out of a scope
@@ -34,4 +42,35 @@ public:
     void set_num_rows(int n);
     void add_elements();
     void transpose();
+
+    // Operator Overloading Functions
+    // I will overload a + operator
+    // we want is to have a matrix plus a scalar = another matrix
+    void operator+(double a);
+    void operator*(double a);
+    void operator*(Matrix A);
+    double operator-(int a);
+
+    void print();
 };
+
+// Template Class
+// template class called AnotherMatrix with T as a generic type
+// Note: When we use a template class, all of the function
+// implementations must be in the header file.
+// Cannot be separated into another .cpp file
+
+namespace aersp{
+    template<typename T> 
+    class AnotherMatrix
+    {
+        std::vector<std::vector<T>> data;
+    public:
+        AnotherMatrix(){
+            std::cout << "AnotherMatrix Created" << std::endl;
+        }
+        ~AnotherMatrix(){
+            std::cout << "AnotherMatrix Destroyed" << std::endl;
+        }
+    };
+}

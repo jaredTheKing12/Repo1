@@ -59,7 +59,72 @@ Matrix::Matrix()
     }
 }
 
+Matrix::Matrix(int x)
+{
+    std::cout << "A constructor with input x: " << x << std::endl;
+}
+
+Matrix::Matrix(std::vector<std::vector<double>> v)
+{
+    this->data = v;
+}
+
 Matrix::~Matrix()
 {
     std::cout << "Matrix Destroyed" << std::endl;
+}
+
+void Matrix::add_two(int x)
+{
+
+}
+
+void Matrix::add_two(double x, float y)
+{
+
+}
+
+void Matrix::operator+(double a)
+{
+    for(int i = 0; i < this->data.size(); i++)
+    {
+        for(int j = 0; j < this->data[i].size(); j++)
+        {
+            this->data[i][j] += a;
+        }
+    }
+}
+
+void Matrix::operator*(double a)
+{
+    for(int i = 0; i < this->data.size(); i++)
+    {
+        for(int j = 0; j < this->data[i].size(); j++)
+        {
+            this->data[i][j] *= a;
+        }
+    }
+}
+
+void Matrix::operator*(Matrix A)
+{
+    std::cout << "Matrix Multiplication" << std::endl;
+}
+
+double Matrix::operator-(int a)
+{
+    return -1;
+}
+
+
+void Matrix::print()
+{
+    for(int i = 0; i < this->data.size(); i++)
+    {
+        for(int j = 0; j < this->data[i].size(); j++)
+        {
+            std::cout << this->data[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
 }
