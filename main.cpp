@@ -1,48 +1,71 @@
 #include <iostream>
-#include <vector>
-#include <array>
-#include "vehicle.h"
-#include "math_tools.h"
-
-// Today: Finish up the operator overloading + quiz
-// - HW1 solution
-// - HW2
-
-// To use an operator overloading function outside a class, one of the input argurments must be a class
-void operator/(Matrix M, char c)
+struct A
 {
-    std::cout << "Matrix / char" << std::endl;
-}
+    A(){std::cout << "constructor of A" << std::endl;}; // constructor of A
+    ~A(){std::cout << "deconstructor A" << std::endl;}; // cdeonstructor of A
+    int a;
+    void aa(){}
+};
 
-std::ostream& operator<<(std::ostream& os, Matrix m)
+struct B : virtual public A // the virtual keyword makes class A virtual, which means any classes that try to derive from class A receive the same members
 {
-    for(int i = 0; i < m.get_rows(); i++)
+    B(int b_in){std::cout << "Constructor of B" << std::endl; this->b = b_in;};
+    ~B(){std::cout << "deconstructor B" << std::endl;}
+    int b;
+    void bb(){}
+};
+
+struct C : virtual public A
+{
+    C(int c_in){std::cout << "Constructor of C" << std::endl; this->c = c_in;};
+    ~C(){std::cout << "deconstructor C" << std::endl;}
+    int c;
+    void cc(){}
+};
+
+struct D : public B, public C
+{
+    int d;
+    D() : B(1), C(2) // pass arguments from a derived class to base classes
     {
-        for(int j = 0; j < m.get_column(); j++)
-        {
-            os << m.get_element(i,j) << " ";
-        }
-        os << std::endl;
-    }
-    return os;
-}
+        std::cout << "Constructor of D" << std::endl;
+    };
 
-std::ostream& operator<<(std::ostream& os, std::vector<double> v)
-{
-    for(auto e : v)
-        os << e  << " ";
-    return os;
-}
+    D(int x) : B(x), C(2)
+    {
+        std::cout << "Constructor of D wint int x" << std::endl;
+    }
+
+    D(int x, int y) : B(x), C(y)
+    {
+        std::cout << "Constructor of D wint int x, int y" << std::endl;
+    }
+
+    D(int x, int y, int z) : B(x), C(y), d(z) // pass int x to a class B, pass int y to a class C, set a variable d to int z
+    {
+        // this->d = z; // one way to set a variable member to an input argument
+        std::cout << "Constructor of D wint int x, int y, int z" << std::endl;
+    }
+
+    ~D(){std::cout << "deconstructor D" << std::endl;}
+    void dd()
+    {
+        // this->aa(); // error, class D doesn't know where to pick function aa() from
+        // one solution is to specify which aa() you want class D to use
+        // this->B::aa();
+        // this->C::aa();
+
+        // the other solution is to use a 'virtual inheritance'
+        this->aa();
+    }
+};
 
 int main()
 {
-    Matrix A(std::vector<std::vector<double>>{{1,2,3}, {4,5,6}});
-    std::vector<double> x = {7,8,9};
-    A/'a';
+    D ddd; // when an object from a derived class is created, constructors from its base classes are called too.
+    // in ther order from the base class to the derived class.
+    // The deconstructor functions are called in the opposite order.
 
-    auto y = A*x; // y is a vector
-    std::cout << "A: " << A << std::endl;
-    std::cout << "x: " << x << std::endl;
-    std::cout << "y: " << y << std::endl;
-}   
-    
+    D ddd1(10), ddd2(10,20), ddd3(10,20,30);
+
+}
