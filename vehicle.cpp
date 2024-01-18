@@ -4,7 +4,7 @@
 // this function is not a part of a class Car
 void accelerate()
 {
-    // vel += 1; // error
+    vel += 1; // error
 }
 
 // this is a function named accelerate that is a member of 
